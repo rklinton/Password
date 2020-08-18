@@ -1,0 +1,85 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+bool CheckUnus(vector<char> unus, int f)
+{
+	for (int i = 0; i < unus.size(); i++)
+	{
+		if (unus[i] == f)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool CUnique(vector<char> inelig, char d, int o)
+{
+	for (int i = 0; i < o; i++)
+	{
+		if (inelig[i] == d)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+int main()
+{
+	string pass = "";
+	int len,numunq,s;
+	char c;
+	vector <char> inelig;
+
+	do
+	{
+		cout << "Length of password(1 - 100):    " ;
+		cin >> len;
+	} while (len > 100 || len < 1);
+
+	cout << endl;
+	
+	do
+	{
+		cout << "Number of unusable characters(0 - 21):    ";
+		cin >> numunq;
+	} while (numunq > 21 || numunq < 0);
+
+	cout << endl;
+
+	if (numunq > 0)
+	{
+		for (int i = 0; i < numunq; i++)
+		{
+			do
+			{
+				cout << "Single unique unusable character #" << (i + 1) << ":    ";
+				cin >> c;
+			} while (CUnique(inelig, c, i));
+			inelig.emplace_back(c);
+			cout << endl;
+		}
+	}
+	
+
+	for (int k = 0; k < len; k++)
+	{
+		s = rand() % 93 + 33;
+		if (CheckUnus(inelig, s)) 
+		{
+			char n = s;
+			pass += n;
+		}
+		else
+		{
+			k = k - 1;
+		}
+	}
+	cout << "Password:    "<<pass << endl;
+	
+
+	cin.get();
+}
